@@ -1,0 +1,72 @@
+html{
+    font-size: 100%;
+}
+.pagination-nav button svg,
+.pagination-nav span svg{
+    width: 18px;
+    height: 18px;
+    display: inline;
+}
+
+.pagination-nav nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pos-realtive{
+    position: relative;
+}
+
+input.form-control,
+input.form-control:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.has-error .help-block {
+    color: #842029;
+}
+
+.bootstrap-datetimepicker-widget{
+    font-size: 85%;
+}
+
+.pl-wrapper {
+	position: relative;
+}
+
+.pl-wrapper .reason-hvr{
+	display: none;
+}
+
+.pl-wrapper:hover .reason-hvr{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: block;
+}
+
+.action-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+}
+.action-btns a,
+.action-btns a i,
+.action-btns button,
+.action-btns button i {
+  color: #ffffff;
+}
+
+.action-btns a:focus,
+.action-btns a:active{
+  outline: none;
+  border: 0;
+  box-shadow: none;
+}
+
+#spins-table_wrapper .dt-search .form-control{
+	width: auto;
+}
