@@ -18,7 +18,7 @@ use Carbon\Carbon;
 								@if( !$user->isEmpty() )
 									<a href="{{route('chitfund.showPlan', $user[0]->plan_id)}}"><i class="lni lni-arrow-left-circle" style="font-size: 30px; float: right;"></i></a>								
 								
-									<h4 class="mb-0">#{{ $user[0]->user_id }} -  {{ $user[0]->user_name }} </h4>
+									<h4 class="mb-0">#{{ $user[0]->token_id }} -  {{ $user[0]->user_name }} </h4>
 								@endif 	
 							</div>
 							<hr/>

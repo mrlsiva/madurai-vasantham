@@ -10,7 +10,20 @@ use Carbon\Carbon;
 <!--page-content-wrapper-->
 	<div class="page-content-wrapper mt-4">
 		<div class="page-content">					
-			
+			@if(session('failedRows'))
+			    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+			        <h5>Some rows were skipped due to validation errors:</h5>
+			        <ul>
+			            @foreach(session('failedRows') as $fail)
+			                <li>
+			                    Row {{ $fail['row'] }}: {{ implode(', ', $fail['errors']) }}
+			                </li>
+			            @endforeach
+			        </ul>
+			        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			    </div>
+			@endif
+
 			<div class="card">
 				<div class="card-body">
 					<div class="card-title">
@@ -30,6 +43,9 @@ use Carbon\Carbon;
 						<table id="example2" class="table table-striped table-bordered" style="width:100%">
 							<div class="ms-auto">
 								<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: inline-start;"><i class="lni lni-circle-plus"></i> Add User</button>
+
+								<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bulkModal" style="float: inline-start;"><i class="lni lni-circle-plus"></i> Bulk Upload</button>
+
 							</div>
 							<thead>
 								<tr>
@@ -46,7 +62,7 @@ use Carbon\Carbon;
 									@if( isset($users[0]->user_id) && $users[0]->user_id != 'null' )
 										@foreach($users as $user)
 											<tr>
-												<td>#{{ $user->user_id }}</td>
+												<td>#{{ $user->token_id }}</td>
 												<td>{{ $user->user_name }}</td>
 												<td>{{ $user->mobile_no }}</td>
 												<td>{{ $user->address }}</td>
@@ -74,7 +90,7 @@ use Carbon\Carbon;
 																<div class="modal-dialog">
 																	<div class="modal-content">
 																		<div class="modal-header" style="background-color:#673ab7;">
-																			<h5 class="modal-title" id="exampleModalLabel" style="color: aliceblue;">Edit User - #{{ $user->user_id }} {{ $user->user_name }} </h5>
+																			<h5 class="modal-title" id="exampleModalLabel" style="color: aliceblue;">Edit User - #{{ $user->token_id }} {{ $user->user_name }} </h5>
 																			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 																		</div>
 																		<div class="modal-body">
@@ -311,6 +327,75 @@ use Carbon\Carbon;
 			</div>	
 			<!-- End of Return Response Popup Model -->			
 			
+			<!-- Bulk Popup Model -->
+			<div class="col">
+				<div class="modal fade" id="bulkModal" tabindex="-1" aria-labelledby="bulkModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header" style="background-color:#673ab7;">
+								<h5 class="modal-title" id="bulkModalLabel" style="color: aliceblue;">Bulk Upload</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<form class="form" action="{{route('chitfund.bulkUpload')}}" method="POST" enctype="multipart/form-data">
+									@csrf	
+									@php 
+										$plan_id = null;
+									@endphp									
+									@if( !$users->isEmpty() )										
+										@php 
+											$plan_id = $users[0]->plan_id;
+										@endphp
+									@endif		
+									<input type="hidden" name="plan_id" value="{{ $plan_id }}">	
+									<div class="mb-3 text-end text-decoration-underline">
+										<a href="{{asset('/public/bulk_uploads/Bulk Upload Template.xlsx')}}">Download Template Here</a>
+									</div>
+
+									<div class="mb-3">
+										<label for="formFile" class="form-label">
+											Upload File
+										</label>
+										<input class="form-control" type="file" name="file" id="formFile" accept=".xls,.xlsx">
+									</div>
+							
+										
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Upload</button>
+									</div>
+								</form>
+								<style>
+									.formm {
+										
+										padding: 20px;
+										border-radius: 10px;
+										width: 450px;
+									}
+							
+									.labell {
+										display: block;
+										margin-bottom: 8px;
+										font-weight: bold;
+									}
+							
+									.inputt {
+										width: 100%;
+										padding: 8px;
+										margin-bottom: 15px;
+										box-sizing: border-box;
+										border: 2px solid #673ab7;
+										border-radius: 4px;
+									}
+								</style>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Add User Popup Model -->
+
 		</div>
 	</div>
 	<!--end page-content-wrapper-->	

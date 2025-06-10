@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AttendanceController; 
 use App\Http\Controllers\SpinController;
 use App\Http\Controllers\FrameController;
+use App\Http\Controllers\ChitFund\TokenGeneratorController; 
 use App\Http\Controllers\ChitFund\ChitFundController; 
 use App\Http\Controllers\ChitFund\ChitFundUserImportController; 
 use App\Http\Controllers\AdminController;
@@ -55,6 +56,7 @@ Route::prefix('admin')->group(function () {
 
     /* Chit Fund */
     Route::group(['middleware'=>'admin'],function(){
+        Route::get('/chitfund/generateToken', [TokenGeneratorController::class, 'tokenGenerate'])->name('tokenGenerate');
         Route::get('/chitfund', [ChitFundController::class, 'chitfundIndex'])->name('chitfundIndex');
         Route::post('/chitfund/createplan', [ChitFundController::class, 'chitfundCreatePlan'])->name('chitfund.createPlan');
         Route::get('/chitfund/plan/{id}', [ChitFundController::class, 'chitfundShowPlan'])->name('chitfund.showPlan');
@@ -64,6 +66,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/chitfund/user-details/{id}', [ChitFundController::class, 'chitfundUserDetails'])->name('chitfund.userDetails');
         Route::post('/chitfund/update/duestatus', [ChitFundController::class, 'updateDueStatus'])->name('chitfund.updateDueStatus');
         Route::get('/chitfund/print-invoice/{id}/{date}', [ChitFundController::class, 'printInvoice'])->name('chitfund.printInvoice');
+
+        //Bulk Upload
+        Route::post('/chitfund/bulkUpload', [ChitFundUserImportController::class, 'bulkUpload'])->name('chitfund.bulkUpload');
         
         Route::post('logout',[AdminController::class,'logout'])->name('logout');
     });    

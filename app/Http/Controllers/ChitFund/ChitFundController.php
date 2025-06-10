@@ -82,7 +82,7 @@ class ChitFundController extends Controller
         $currentTime = Carbon::now();
         $users = DB::table('chitfund_scheme as s')
             ->where('s.plan_id', '=', $id)	
-            ->select( 'u.user_id', 'u.user_name', 'u.mobile_no', 'u.address', 'u.plan_id as uplan_id', 's.plan_id', 's.plan_name', 's.start_date', 's.end_date')          	
+            ->select( 'u.user_id', 'u.token_id','u.user_name', 'u.mobile_no', 'u.address', 'u.plan_id as uplan_id', 's.plan_id', 's.plan_name', 's.start_date', 's.end_date')          	
             ->leftJoin('chitfund_users as u', 'u.plan_id', '=', 's.plan_id') 
             ->orderBy('u.createdOn', 'DESC') 
             ->orderBy('u.user_id', 'DESC')            
@@ -104,7 +104,11 @@ class ChitFundController extends Controller
             if ($validator->fails()) { 
                 return redirect()->back()->withErrors($validator->errors())->withInput($request->input());
             }
-            $input = $request->all();           
+            $input = $request->all();
+
+            $lastTokenId = ChitFund_Users::where('plan_id', $request->plan_id)->orderByDesc('token_id')->value('token_id');
+
+            $input['token_id'] =  $lastTokenId + 1;           
             $input['createdOn'] =  Carbon::now();
             $currentTime = Carbon::now(); 
             $whatsapp_url = '#';                    
@@ -301,7 +305,7 @@ class ChitFundController extends Controller
 
             $user = DB::table('chitfund_dues as d')
                 ->where('d.user_id', '=', $id)	
-                ->select( 'u.plan_id as uplan_id', 'u.user_name', 'u.mobile_no', 'd.due_id', 'd.user_id', 'd.plan_id', 'd.due_status', 'd.due_date', 'd.due_date_paid', 's.plan_name', 's.plan_amount' )          	
+                ->select( 'u.plan_id as uplan_id','u.token_id', 'u.user_name', 'u.mobile_no', 'd.due_id', 'd.user_id', 'd.plan_id', 'd.due_status', 'd.due_date', 'd.due_date_paid', 's.plan_name', 's.plan_amount' )          	
                 ->leftJoin('chitfund_users as u', 'u.user_id', '=', 'd.user_id')  
                 ->leftJoin('chitfund_scheme as s', 's.plan_id', '=', 'd.plan_id')
                 ->orderBy('d.due_id', 'ASC')	         
@@ -412,7 +416,7 @@ class ChitFundController extends Controller
 
                 $user = DB::table('chitfund_dues as d')
                     ->where('d.due_id', '=', $due_id)
-                    ->select( 'u.user_name', 'u.mobile_no', 'd.due_id', 'd.user_id', 'd.plan_id', 'd.due_status', 'd.due_date', 'd.due_date_paid', 's.plan_name', 's.plan_amount', DB::raw("SUM(d1.due_status) as total_dues_paid") )          	
+                    ->select('u.token_id', 'u.user_name', 'u.mobile_no', 'd.due_id', 'd.user_id', 'd.plan_id', 'd.due_status', 'd.due_date', 'd.due_date_paid', 's.plan_name', 's.plan_amount', DB::raw("SUM(d1.due_status) as total_dues_paid") )          	
                     ->leftJoin('chitfund_users as u', 'u.user_id', '=', 'd.user_id') 
                     ->leftJoin('chitfund_scheme as s', 's.plan_id', '=', 'd.plan_id')
                     ->leftJoin('chitfund_dues as d1', 'd1.user_id', '=', 'd.user_id') 

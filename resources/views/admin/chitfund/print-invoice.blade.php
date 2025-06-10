@@ -95,7 +95,7 @@ use Carbon\Carbon;
 		<p class="centered fw-bold mt-0">Contact: 99943 33605</p>
 		<p class="centered fw-bold mt-2 mb-0">VASANTHAM SIRU SEMIPPU THITTAM</p>
 		<p class="centered fw-bold mt-2 mb-1">Token Number</p>
-		<p class="centered fw-bold mt-0 mb-3 token">{{ $user[0]->user_id }}</p>
+		<p class="centered fw-bold mt-0 mb-3 token">{{ $user[0]->token_id }}</p>
 	</div>
 
 	<table class="  mt-2 " style="width:100%">
