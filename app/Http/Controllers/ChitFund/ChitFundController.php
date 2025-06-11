@@ -117,7 +117,7 @@ class ChitFundController extends Controller
             if($user){               
                 $plan = ChitFund_Scheme::where('plan_id', $user->plan_id)->get();               
 
-                $data['user_id']    = $user->id;  
+                $data['user_id']    = $user->token_id;  
                 $data['plan_id']    = $user->plan_id;  
                 $data['start_date'] = $plan[0]->start_date;  
                 $data['end_date']   = $plan[0]->end_date;  
