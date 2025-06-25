@@ -70,7 +70,9 @@ Route::prefix('admin')->group(function () {
         //Bulk Upload
         Route::post('/chitfund/bulkUpload', [ChitFundUserImportController::class, 'bulkUpload'])->name('chitfund.bulkUpload');
         
-        Route::post('logout',[AdminController::class,'logout'])->name('logout');
+        // Route::post('logout',[AdminController::class,'logout'])->name('logout');
+        Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout');
+
     });    
     
     /* Chit Fund Users - Import from Excel*/
