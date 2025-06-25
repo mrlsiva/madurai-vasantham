@@ -31,8 +31,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/users/logs/', [AttendanceController::class, 'allLogs']);
     Route::get('/users/logs/{id}', [AttendanceController::class, 'userlog'])->name('userlog');
 
-    Route::get('/user-export/{id}', [AttendanceController::class, 'exportAttendenceLogs'])->name('attendancelogs.export');
-    Route::post('/user-export/', [AttendanceController::class, 'exportAttendenceLogs'])->name('attendancelogs.export');
+    Route::get('/user-export/{id}', [AttendanceController::class, 'exportAttendenceLogs'])->name('attendancelogs.export.get');
+    Route::post('/user-export/', [AttendanceController::class, 'exportAttendenceLogs'])->name('attendancelogs.export.post');
 
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
