@@ -19,7 +19,7 @@
 }
 
 #main {
-	background: linear-gradient(to bottom, rgba(0,0,0,0.66) 100%, transparent), url('resources/images/home_bg.png');
+	background: linear-gradient(to bottom, rgba(0,0,0,0.66) 100%, transparent), url('../resources/images/home_bg.png');
 	background-size: cover, cover;
 	background-position: center, center;
 	height: 100vh;

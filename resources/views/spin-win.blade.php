@@ -119,17 +119,17 @@
   <body>
     <div class="strech">
       <div class="logo">
-        <img src="{{ asset('resources/images/logo-2.png') }}" />
+        <img src="{{ asset('../resources/images/logo-2.png') }}" />
       </div>
       <div class="logo" style="margin-top: 0px">
-        <img src="{{ asset('resources/images/spin-logo.png') }}" height="200px" />
+        <img src="{{ asset('../resources/images/spin-logo.png') }}" height="200px" />
       </div>
     </div>
     <div id="spin-wrapper" class="wrapper">
       <div id="spin-container" class="container">
         <canvas id="wheel"></canvas>
         <button id="spin-btn">Spin</button>
-        <img class="arrow" src="{{ asset('resources/images/spin-arrow.png') }}" width="70" alt="spinner arrow" />
+        <img class="arrow" src="{{ asset('../resources/images/spin-arrow.png') }}" width="70" alt="spinner arrow" />
       </div>
       <div id="final-value">
         <p>Click On The Spin Button To Start</p>

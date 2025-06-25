@@ -68,10 +68,10 @@
 <body>
 <div class="strech">
       <div class="logo">
-        <img src="{{ asset('resources/images/logo-2.png') }}" style="max-height:200px;" />
+        <img src="{{ asset('../resources/images/logo-2.png') }}" style="max-height:200px;" />
       </div>
       <div class="logo" style="margin-top: 0px">
-        <img src="{{ asset('resources/images/spin-logo.png') }}" height="200px" />
+        <img src="{{ asset('../resources/images/spin-logo.png') }}" height="200px" />
       </div>
     <div class="thank-you-wrapper">
         <h2><strong>Dear {{ ucfirst($spindata['name']) }}</strong></h2>
@@ -80,7 +80,7 @@
         <p>You won: <strong>{{ $prize }}</strong></p> <!-- Display the prize here -->
 		
 		<div class="prize-img" style="margin-top: 0px;">
-			<img src="{{ asset('resources/images/spin/'.$spindata['discount'].'.png') }}" />
+			<img src="{{ asset('../resources/images/spin/'.$spindata['discount'].'.png') }}" />
 		</div>
 		
 		<p style="margin-top: 15px;">Mobile: <strong>{{ $spindata['mobile'] }}</strong></p> 

@@ -139,7 +139,7 @@ button[disabled]{
                 <label for="imageUpload"></label>
             </div>
             <div id="avatar-preview" class="avatar-preview">
-                <img src="{{ asset('resources/images/frame.png') }} " class="frame">
+                <img src="{{ asset('../resources/images/frame.png') }} " class="frame">
                 <!-- <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
                 </div> -->
                <div class="photo">
