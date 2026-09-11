@@ -640,7 +640,7 @@ class UserController extends Controller
                     ->where('u.userId', $userId)->first();                        
                     
                 if($userData){
-                    $userData->userImageUrl = URL::to('public/'.$this->profileDir.$userData->userImageUrl);
+                    $userData->userImageUrl = URL::to($this->profileDir.$userData->userImageUrl);
                     return response()->json(['success'=> true, 'data' => $userData], $this->successStatus);
                 } else{
                     return response()->json(['success'=> false, 'message' => 'No Records Found'], $this->successStatus);     

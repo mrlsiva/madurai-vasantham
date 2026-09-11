@@ -555,12 +555,12 @@ class AttendanceController extends Controller
         $is_exists = false;
 
         if( $imageUrl != '' && file_exists(public_path('/uploads/staffs/'.$imageUrl)) ) {
-            $img_src = URL::to('/public/uploads/staffs/'.$imageUrl ); 
+            $img_src = URL::to('/uploads/staffs/'.$imageUrl );
             $is_exists = true;
-        }    
+        }
         else {
-            $img_src = URL::to('/public/uploads/thumb/user-thumb.png'); 
-       }  
+            $img_src = URL::to('/uploads/thumb/user-thumb.png');
+       }
        return array( 'is_exists' => $is_exists, 'img_src' => $img_src);
     }
     
