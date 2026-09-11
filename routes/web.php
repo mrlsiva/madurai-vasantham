@@ -24,6 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/sitemap', function () {
+    return response()->file(public_path('sitemap.html'), ['Content-Type' => 'text/html; charset=UTF-8']);
+});
+
 Route::prefix('admin')->group(function () {
 
     Route::get('/users', [UserController::class, 'index']);
