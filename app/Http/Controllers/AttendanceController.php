@@ -288,11 +288,13 @@ class AttendanceController extends Controller
     public function in(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [ 
+            $validator = Validator::make($request->all(), [
                'userId' => 'required',
-               'shiftId' => 'required', 
-               'associatedId' => 'required', 
+               'shiftId' => 'required',
+               'associatedId' => 'required',
                'imageUrl' => 'required',
+               'latitude' => 'nullable|numeric|between:-90,90',
+               'longitude' => 'nullable|numeric|between:-180,180',
            ]);
            if ($validator->fails()) { 
                return response()->json(['error'=>$validator->errors()], 401);            
@@ -351,18 +353,31 @@ class AttendanceController extends Controller
     public function out(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [ 
-               'userId' => 'required',                        
+            $validator = Validator::make($request->all(), [
+               'userId' => 'required',
+               'latitude' => 'nullable|numeric|between:-90,90',
+               'longitude' => 'nullable|numeric|between:-180,180',
            ]);
-           if ($validator->fails()) { 
-               return response()->json(['error'=>$validator->errors()], 401);            
+           if ($validator->fails()) {
+               return response()->json(['error'=>$validator->errors()], 401);
            }
-           $input = $request->all(); 
-           
+           $input = $request->all();
+
+           // stored separately from the punch-in latitude/longitude so checking out
+           // doesn't overwrite where the user checked in
+           if (isset($input['latitude'])) {
+               $input['out_latitude'] = $input['latitude'];
+               unset($input['latitude']);
+           }
+           if (isset($input['longitude'])) {
+               $input['out_longitude'] = $input['longitude'];
+               unset($input['longitude']);
+           }
+
            $input['endTime'] =  Carbon::now();
-           $input['endDate'] =  Carbon::now();          
+           $input['endDate'] =  Carbon::now();
            $input['modifiedBy'] =  $input['userId'];
-           $input['modifiedOn'] =  Carbon::now(); 
+           $input['modifiedOn'] =  Carbon::now();
           
             $currentTime = Carbon::now();
             $islogin = $this->islogin($input['userId']);

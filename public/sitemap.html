@@ -831,13 +831,15 @@ Authorization: Bearer &lt;sanctum-token&gt;</code></pre>
 
         <article class="api-card">
           <header class="api-card-head"><span class="method post">POST</span><code class="path">/api/staff/attendance/in</code><span class="name">AttendanceController@in</span></header>
-          <p class="api-desc">Punch in for the day. Rejects if already punched in; saves the selfie under <code>public/uploads/staffs/&lt;userId&gt;/…</code>.</p>
+          <p class="api-desc">Punch in for the day. Rejects if already punched in; saves the selfie under <code>public/uploads/staffs/&lt;userId&gt;/…</code>. <code>latitude</code>/<code>longitude</code> are optional &mdash; older app builds that don&rsquo;t send them still work.</p>
           <div class="api-examples">
             <div class="example"><div class="example-label">Request &middot; multipart/form-data<button class="copy-btn" data-copy>Copy</button></div>
               <pre><code>userId=EMP1042
 shiftId=1
 associatedId=3
-imageUrl=@selfie.jpg</code></pre>
+imageUrl=@selfie.jpg
+latitude=9.9252007
+longitude=78.1197754</code></pre>
             </div>
             <div class="example"><div class="example-label">Response <span class="status">200</span></div>
               <pre><code>{
@@ -856,8 +858,13 @@ imageUrl=@selfie.jpg</code></pre>
 
         <article class="api-card">
           <header class="api-card-head"><span class="method post">POST</span><code class="path">/api/staff/attendance/out</code><span class="name">AttendanceController@out</span></header>
+          <p class="api-desc">Punch out for the day. <code>latitude</code>/<code>longitude</code> here are stored separately as <code>out_latitude</code>/<code>out_longitude</code>, so they don&rsquo;t overwrite the punch-in location on the same row.</p>
           <div class="api-examples">
-            <div class="example"><div class="example-label">Request &middot; JSON</div><pre><code>{ <span class="k">"userId"</span>: <span class="s">"EMP1042"</span> }</code></pre></div>
+            <div class="example"><div class="example-label">Request &middot; JSON</div><pre><code>{
+  <span class="k">"userId"</span>: <span class="s">"EMP1042"</span>,
+  <span class="k">"latitude"</span>: <span class="n">9.9198002</span>,
+  <span class="k">"longitude"</span>: <span class="n">78.1130753</span>
+}</code></pre></div>
             <div class="example"><div class="example-label">Response <span class="status">200</span></div><pre><code>{ <span class="k">"success"</span>: <span class="n">true</span>, <span class="k">"message"</span>: <span class="s">"Out Success"</span> }</code></pre></div>
           </div>
         </article>
