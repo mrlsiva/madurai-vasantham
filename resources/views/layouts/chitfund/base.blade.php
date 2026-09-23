@@ -72,13 +72,13 @@
 				</a>
 				<ul class="dropdown-menu logout-menu" aria-labelledby="navbarScrollingDropdown">
 					<li>
-					<a class="dropdown-item"  href="{{ route('logout') }}"
+					<a class="dropdown-item"  href="{{ route('chitfund.logout') }}"
 						onclick="event.preventDefault();
 										document.getElementById('logout-form').submit();">
 							<i class="fa fa-fw fa-power-off"></i>
 							{{ __('Logout') }}
 						</a>
-						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+						<form id="logout-form" action="{{ route('chitfund.logout') }}" method="POST" style="display: none;">
 							@csrf
 						</form>        
 					</li>

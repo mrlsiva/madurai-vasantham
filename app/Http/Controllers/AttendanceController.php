@@ -194,8 +194,15 @@ class AttendanceController extends Controller
                         if($isPast){
                             $loginData['atStatus'] = 1; // Allow Punch Button to Enable
                         }  else{
-                            $loginData['atStatus'] = 0; // Dont Allow Punch Button 
-                        }                       
+                            $loginData['atStatus'] = 0; // Dont Allow Punch Button
+                        }
+
+                        /* Shift already over for today: punch in is closed */
+                        $shiftEnd = $this->shiftEndToday($userId);
+                        if( $shiftEnd && $currentTime->gte($shiftEnd) ){
+                            $loginData['atStatus'] = 0; // Dont Allow Punch Button
+                            $loginData['message'] = 'Punch in closed. Your shift ended at '.$shiftEnd->format('h:i A');
+                        }
                           
                     } else{
                         $loginData['atStatus'] = 0; // Dont Allow Punch Button 
@@ -285,6 +292,19 @@ class AttendanceController extends Controller
         }   
     }   
 
+    /* Today's shift end for the user; null when no shift or the shift runs past midnight */
+    public function shiftEndToday(string $userId): ?Carbon
+    {
+        $ShiftTime = (new ShiftTimeController)->getUserShiftTime($userId)->getData();
+        if( $ShiftTime->success != true ){
+            return null;
+        }
+        if( Carbon::parse($ShiftTime->data->endTime)->lte(Carbon::parse($ShiftTime->data->startTime)) ){
+            return null;
+        }
+        return Carbon::today()->setTimeFromTimeString($ShiftTime->data->endTime);
+    }
+
     public function in(Request $request)
     {
         try {
@@ -314,11 +334,21 @@ class AttendanceController extends Controller
             $success['punchInTime'] = $currentTime->format('Y-m-d H:i:s');
             $success['lateBy'] = $result['lateBy'];  
 
-            if( $islogin->success == true ){	    
-                $success['atStatus'] = 1; // Already Punch In            
+            if( $islogin->success == true ){
+                $success['atStatus'] = 1; // Already Punch In
                 $success['message'] = 'Already Punch In';
                 return response()->json(['success'=> true, 'data' => $success], $this->successStatus);
-            }else{  
+            }
+
+            /* No punch in once the shift has ended for the day */
+            $shiftEnd = $this->shiftEndToday($userId);
+            if( $shiftEnd && $currentTime->gte($shiftEnd) ){
+                return response()->json(['success'=> false, 'data' => [
+                    'currentTime' => $currentTime->format('Y-m-d H:i:s'),
+                    'atStatus'    => 0, // Dont Allow Punch Button
+                    'message'     => 'Punch in closed. Your shift ended at '.$shiftEnd->format('h:i A'),
+                ]], $this->successStatus);
+            }else{
                 $this->createDirectory($userId);
                 $dir = $this->getSelfieDirectory($userId);
                 $fileName = $userId.'_'.time().'.'.$request->imageUrl->extension(); 
@@ -446,7 +476,7 @@ class AttendanceController extends Controller
     {
         try {  
             $attendancelogs =  Attendance::join('users', 'users.userId', '=', 'attendance.userId') 
-                    ->select(['users.userId', 'users.firstName', 'users.lastName', 'attendance.attandanceId', 'attendance.userId', 'attendance.startTime', 'attendance.endTime', 'attendance.startDate', 'attendance.endDate'])
+                    ->select(['users.userId', 'users.firstName', 'users.lastName', 'attendance.attandanceId', 'attendance.userId', 'attendance.startTime', 'attendance.endTime', 'attendance.startDate', 'attendance.endDate', 'attendance.imageUrl', 'attendance.latitude', 'attendance.longitude', 'attendance.out_latitude', 'attendance.out_longitude', 'attendance.is_auto_punch_out'])
                     ->orderBy('attendance.attandanceId', 'desc')
                     ->paginate(10);
             
@@ -476,7 +506,7 @@ class AttendanceController extends Controller
                                
                 $attendancelogs =  DB::table('attendance as a1')
                 ->where('a1.userId', '=', $id)	
-                ->select( 'u.*', 'a1.userId as auId', 'a1.attandanceId', 'a1.startTime', 'a1.endTime', 'a1.startDate', 'a1.endDate', 'a1.imageUrl', 'a1.is_permission', 'a1.permission_startTime', 'a1.permission_endTime', 'a1.permission_imageUrl', 'a1.is_leave', 'a1.reason', 's.shiftId as shid', 's.shiftName', 's.startTime as shiftstartTime', 's.endTime as shiftendTime', DB::raw("TIME(a1.endTime) as eTime") , DB::raw("TIME(a1.startTime) as sTime") , DB::raw("TIME_FORMAT(SEC_TO_TIME((TIME_TO_SEC(CASE WHEN SUBTIME(IFNULL(TIME(a1.endTime),0),IFNULL(TIME(a1.startTime),0)) > '00:00:00' THEN SUBTIME(IFNULL(TIME(a1.endTime),0),IFNULL(TIME(a1.startTime),0)) ELSE '00:00:00' END))), '%H:%i:%s' )as total_hours"), DB::raw("IFNULL(TIME_FORMAT(SEC_TO_TIME(TIMESTAMPDIFF(SECOND, a1.permission_startTime, a1.permission_endTime)), '%H:%i:%S'), '00:00:00') as permissionInHours") )
+                ->select( 'u.*', 'a1.userId as auId', 'a1.attandanceId', 'a1.startTime', 'a1.endTime', 'a1.startDate', 'a1.endDate', 'a1.imageUrl', 'a1.latitude', 'a1.longitude', 'a1.out_latitude', 'a1.out_longitude', 'a1.is_auto_punch_out', 'a1.is_permission', 'a1.permission_startTime', 'a1.permission_endTime', 'a1.permission_imageUrl', 'a1.is_leave', 'a1.reason', 's.shiftId as shid', 's.shiftName', 's.startTime as shiftstartTime', 's.endTime as shiftendTime', DB::raw("TIME(a1.endTime) as eTime") , DB::raw("TIME(a1.startTime) as sTime") , DB::raw("TIME_FORMAT(SEC_TO_TIME((TIME_TO_SEC(CASE WHEN SUBTIME(IFNULL(TIME(a1.endTime),0),IFNULL(TIME(a1.startTime),0)) > '00:00:00' THEN SUBTIME(IFNULL(TIME(a1.endTime),0),IFNULL(TIME(a1.startTime),0)) ELSE '00:00:00' END))), '%H:%i:%s' )as total_hours"), DB::raw("IFNULL(TIME_FORMAT(SEC_TO_TIME(TIMESTAMPDIFF(SECOND, a1.permission_startTime, a1.permission_endTime)), '%H:%i:%S'), '00:00:00') as permissionInHours") )
                 ->leftJoin('users as u', 'u.userId', '=', 'a1.userId')		
                 ->leftJoin('shifttime as s', 's.shiftId', '=', 'a1.shiftId') 									
                 ->groupBy('a1.userId')	

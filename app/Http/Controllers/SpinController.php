@@ -298,6 +298,12 @@ class SpinController extends Controller
     public function spinInvoices()
     {        
         $invoices = Spin_Invoice::orderByDesc('id')->get();
-        return view('admin.spins-invoices', compact('invoices'));
+
+        /* Invoices already spun, keyed as "branch|invoice_number" (lowercase) */
+        $used = Spin::select('branch', 'invoice_number')->get()
+            ->mapWithKeys(fn ($spin) => [strtolower($spin->branch.'|'.$spin->invoice_number) => true])
+            ->all();
+
+        return view('admin.spins-invoices', compact('invoices', 'used'));
     } 
 }

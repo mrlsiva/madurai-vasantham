@@ -66,6 +66,8 @@ use App\Http\Controllers\AttendanceController;
 		$permission_imageUrl = '';
 		$leave =  '-';
 		$late =  [];
+		$inLat = $inLng = $outLat = $outLng = null;
+		$autoOut = false;
         @endphp
 
         @if( !$attendance->isEmpty() )
@@ -74,6 +76,7 @@ use App\Http\Controllers\AttendanceController;
                     @php $startTime = $attend->startTime ? $attend->startTime : '-'; @endphp             
                     @php $endTime = $attend->endTime ? $attend->endTime : '-'; @endphp
                     @php $imageUrl = $attend->imageUrl ? $attend->imageUrl : ''; @endphp					
+					@php $inLat = $attend->latitude; $inLng = $attend->longitude; $outLat = $attend->out_latitude; $outLng = $attend->out_longitude; @endphp
 					@php $permission = $attend->is_permission == 1 ? "<span class='btn bg-warning pl-wrapper'>P </span><br>$attend->permissionInHours <br><span class='reason-hvr'>$attend->reason</span>" : '-' @endphp
 					@php $permission_imageUrl = $attend->permission_imageUrl ? $attend->permission_imageUrl : ''; @endphp					
 					@php $leave = $attend->is_leave == 1 ? "<span class='btn bg-danger pl-wrapper'>L</span> <br><span class='reason-hvr'>$attend->reason</span>" : '-' @endphp 
@@ -98,6 +101,16 @@ use App\Http\Controllers\AttendanceController;
                     @endif --}}
 
                     {{ $startTime }}
+                    @php
+                        $loc = [
+                            'name'  => $user->firstName.' '.$user->lastName,
+                            'date'  => $currentTime->format('d M Y'),
+                            'shift' => !empty($user->shiftstartTime) ? Carbon::parse($user->shiftstartTime)->format('h:iA').' - '.Carbon::parse($user->shiftendTime)->format('h:iA') : '',
+                            'photo' => $imageUrl ? AttendanceController::getUserMedia($imageUrl)['img_src'] : '',
+                        ];
+                    @endphp
+                    @include('admin.partials.location-button', $loc + ['kind' => 'in', 'time' => $startTime,
+                        'lat' => $inLat, 'lng' => $inLng, 'otherLat' => $outLat, 'otherLng' => $outLng])
                 </td>
                 <td>
                 {{-- @if(isset($user->endTime) && !empty($user->endTime)) 
@@ -105,6 +118,9 @@ use App\Http\Controllers\AttendanceController;
                     @endif --}}
 
                     {{ $endTime }}
+                    @if( $autoOut )<span class="badge bg-warning text-dark" title="No punch out before midnight - set to shift end automatically">Auto</span>@endif
+                    @include('admin.partials.location-button', $loc + ['kind' => 'out', 'time' => $endTime,
+                        'lat' => $outLat, 'lng' => $outLng, 'otherLat' => $inLat, 'otherLng' => $inLng])
                 </td>
                 <td>
                 {{-- @if(isset($user->imageUrl) && !empty($user->imageUrl)) 
@@ -192,4 +208,5 @@ use App\Http\Controllers\AttendanceController;
 </div>
 
 </div></div>
+@include('admin.partials.location-modal')
 @endsection

@@ -11,21 +11,34 @@ use Validator;
 
 class AdminController extends Controller
 {
+    /* Admin areas that share the admin login: heading on the login page and page to open after login */
+    protected $modules = [
+        'attendance' => ['heading' => 'Attendance Admin',               'home' => 'attendance.index'],
+        'chitfund'   => ['heading' => 'Vasantham Siru Semippu Thittam', 'home' => 'chitfundIndex'],
+        'spin'       => ['heading' => 'Spin Wheel Admin',               'home' => 'spin.admin'],
+    ];
+
     //todo: admin login form
-    public function login_form()
+    public function login_form(string $module)
     {
-        return view('admin.login-form');
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route($this->modules[$module]['home']);
+        }
+        return view('admin.login-form', [
+            'heading' => $this->modules[$module]['heading'],
+            'action'  => route($module.'.login.validate'),
+        ]);
     }
 
     //todo: admin login functionality
-    public function login_validate(Request $request){
+    public function login_validate(Request $request, string $module){
         $request->validate([
             'username'=>'required',
             'password'=>'required',
         ]);       
 
         if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
-            return redirect()->route('chitfundIndex');
+            return redirect()->route($this->modules[$module]['home']);
         }else{
             Session::flash('error-message','Invalid Username or Password');
             return back();
@@ -33,9 +46,9 @@ class AdminController extends Controller
     }
 
     //todo: admin logout functionality
-    public function logout(){
+    public function logout(string $module){
         Auth::guard('admin')->logout();
-        return redirect()->route('login.form');
+        return redirect()->route($module.'.login');
     }
 
     

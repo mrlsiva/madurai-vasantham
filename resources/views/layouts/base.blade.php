@@ -32,31 +32,33 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
    
-    <a class="navbar-brand" href="{{ url('/admin/users') }}">{{ config('app.name', 'Laravel') }}</a>
+    <a class="navbar-brand" href="{{ route('attendance.index') }}">{{ config('app.name', 'Laravel') }}</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url('/admin/users')}}">  Users</a>
+            <a class="nav-link active" aria-current="page" href="{{ route('attendance.index') }}">  Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url('/admin/users/create')}}">  Add User</a>
+            <a class="nav-link active" aria-current="page" href="{{ route('users.create') }}">  Add User</a>
         </li>
-		<li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ url('/spin-form')}}">  Spin Form</a>
-        </li> 
-        <li class="nav-item dropdown">
-            <a class="nav-link active dropdown-toggle" aria-current="page" href="#" role="button" id="spindropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> Spins</a>
-			<ul class="dropdown-menu" aria-labelledby="spindropdownMenuLink">
-				<li><a class="dropdown-item" href="{{ url('/admin/users/spins')}}">All Spins</a></li>
-				<li><a class="dropdown-item" href="{{route('spinInvoices')}}">View Invoice</a></li>
-				<li><a class="dropdown-item" href="{{route('importInvoice')}}" target="_blank">Import Invoice</a></li>
-			</ul>
-        </li>   
-      </ul>      
-  
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('attendance.logs') }}">  Logs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('salary.index') }}">  Salary</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('salary.workingDaysYear') }}">  Working Days</a>
+        </li>
+      </ul>
+      <form action="{{ route('attendance.logout') }}" method="POST" class="d-flex">
+        @csrf
+        <button type="submit" class="btn btn-outline-light btn-sm"><i class="fa fa-power-off"></i> Logout</button>
+      </form>
+
     </div>
   </div>
 </nav>

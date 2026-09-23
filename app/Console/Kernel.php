@@ -13,6 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+
+        // Staff who did not punch out before midnight: punch out at shift end
+        $schedule->command('attendance:auto-punch-out')->dailyAt('00:05');
     }
 
     /**

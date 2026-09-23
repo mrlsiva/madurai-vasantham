@@ -4,7 +4,7 @@ $currentTime = Carbon::now();
 use App\Http\Controllers\SpinController;
 @endphp
 
-@extends('layouts.base')
+@extends('layouts.spin-admin')
 
 @section('content') 
 
@@ -81,7 +81,7 @@ use App\Http\Controllers\SpinController;
                 </td>-->
 				<td>
 					@if( $spin->discount ) 
-                    <img src="{{ asset('../resources/images/spin/'.$spin->discount.'.png') }}" width="100" />
+                    <img src="{{ asset('resources/images/spin/'.$spin->discount.'.png') }}" width="100" />
 					@else
 					-
                     @endif

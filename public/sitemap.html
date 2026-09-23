@@ -479,9 +479,9 @@
           <table class="routes">
             <thead><tr><th>Method</th><th>Path</th><th>Name</th><th>Auth</th><th>Body / params</th></tr></thead>
             <tbody>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/chitfund/login</code></td><td>login.form</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/chitfund/login-validate</code></td><td>login.validate</td><td><span class="auth-pill public">public</span></td><td class="params">username, password</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/logout</code></td><td>logout</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/chitfund/admin/login</code></td><td>chitfund.login</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/chitfund/admin/login</code></td><td>chitfund.login.validate</td><td><span class="auth-pill public">public</span></td><td class="params">username, password</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/chitfund/admin/logout</code></td><td>chitfund.logout</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
             </tbody>
           </table>
         </div>
@@ -494,17 +494,17 @@
           <table class="routes">
             <thead><tr><th>Method</th><th>Path</th><th>Name</th><th>Auth</th><th>Body / params</th></tr></thead>
             <tbody>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/chitfund</code></td><td>chitfundIndex</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/chitfund/createplan</code></td><td>chitfund.createPlan</td><td><span class="auth-pill protected">protected</span></td><td class="params">plan_name, plan_amount, start_date, end_date, start_date_submit, end_date_submit</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/chitfund/plan/{id}</code></td><td>chitfund.showPlan</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/chitfund/createuser</code></td><td>chitfund.createUser</td><td><span class="auth-pill protected">protected</span></td><td class="params">user_name, mobile_no, address, plan_id</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/chitfund/edituser</code></td><td>chitfund.editUser</td><td><span class="auth-pill protected">protected</span></td><td class="params">user_id, user_name, mobile_no, address, plan_id</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/chitfund/adddue/{planid}/{id}</code></td><td>chitfund.addDue</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/chitfund/user-details/{id}</code></td><td>chitfund.userDetails</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/chitfund/update/duestatus</code></td><td>chitfund.updateDueStatus</td><td><span class="auth-pill protected">protected</span></td><td class="params">due_id, due_status</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/chitfund/print-invoice/{id}/{date}</code></td><td>chitfund.printInvoice</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/chitfund/import-user</code></td><td>chitfund.showimport</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/chitfund/save-import-user</code></td><td>chitfund.importExcel</td><td><span class="auth-pill open">unprotected</span></td><td class="params">file (.xlsx / .xls)</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/chitfund/admin</code></td><td>chitfundIndex</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/chitfund/admin/createplan</code></td><td>chitfund.createPlan</td><td><span class="auth-pill protected">protected</span></td><td class="params">plan_name, plan_amount, start_date, end_date, start_date_submit, end_date_submit</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/chitfund/admin/plan/{id}</code></td><td>chitfund.showPlan</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/chitfund/admin/createuser</code></td><td>chitfund.createUser</td><td><span class="auth-pill protected">protected</span></td><td class="params">user_name, mobile_no, address, plan_id</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/chitfund/admin/edituser</code></td><td>chitfund.editUser</td><td><span class="auth-pill protected">protected</span></td><td class="params">user_id, user_name, mobile_no, address, plan_id</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/chitfund/admin/adddue/{planid}/{id}</code></td><td>chitfund.addDue</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/chitfund/admin/user-details/{id}</code></td><td>chitfund.userDetails</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/chitfund/admin/update/duestatus</code></td><td>chitfund.updateDueStatus</td><td><span class="auth-pill protected">protected</span></td><td class="params">due_id, due_status</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/chitfund/admin/print-invoice/{id}/{date}</code></td><td>chitfund.printInvoice</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/chitfund/admin/import-user</code></td><td>chitfund.showimport</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/chitfund/admin/save-import-user</code></td><td>chitfund.importExcel</td><td><span class="auth-pill protected">protected</span></td><td class="params">file (.xlsx / .xls)</td></tr>
             </tbody>
           </table>
         </div>
@@ -517,22 +517,22 @@
           <table class="routes">
             <thead><tr><th>Method</th><th>Path</th><th>Name</th><th>Auth</th><th>Body / params</th></tr></thead>
             <tbody>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users</code></td><td>&mdash;</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/create</code></td><td>users.create</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/users/store</code></td><td>users.store</td><td><span class="auth-pill open">unprotected</span></td><td class="params">firstName, lastName, email, password, mobile, gender, DOB, role</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/edit/{id}</code></td><td>users.edit</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/users/update</code></td><td>users.update</td><td><span class="auth-pill open">unprotected</span></td><td class="params">userId, firstName, lastName, email, password, mobile, gender, DOB, address, role, shiftId</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/users/delete/{id}</code></td><td>users.delete</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/trash</code></td><td>users.trashed</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/users/deleteforever/{id}</code></td><td>users.deleteforever</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/users/restore/{id}</code></td><td>users.restore</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/shift/create/{id}</code></td><td>shift.create</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/admin/users/shift/store</code></td><td>shift.store</td><td><span class="auth-pill open">unprotected</span></td><td class="params">userId, shiftId</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/logs</code></td><td>&mdash;</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/logs/{id}</code></td><td>userlog</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/user-export/{id}</code></td><td>attendancelogs.export</td><td><span class="auth-pill open">unprotected</span></td><td class="params">?date=YYYY-MM (optional)</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/spins</code></td><td>&mdash;</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/admin/users/spins/update/{id}</code></td><td>updateInvoiceForm</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin</code></td><td>attendance.index</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin/users/create</code></td><td>users.create</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/attendance/admin/users/store</code></td><td>users.store</td><td><span class="auth-pill protected">protected</span></td><td class="params">firstName, lastName, email, password, mobile, gender, DOB, role</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin/users/edit/{id}</code></td><td>users.edit</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/attendance/admin/users/update</code></td><td>users.update</td><td><span class="auth-pill protected">protected</span></td><td class="params">userId, firstName, lastName, email, password, mobile, gender, DOB, address, role, shiftId</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/attendance/admin/users/delete/{id}</code></td><td>users.delete</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin/users/trash</code></td><td>users.trashed</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/attendance/admin/users/deleteforever/{id}</code></td><td>users.deleteforever</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/attendance/admin/users/restore/{id}</code></td><td>users.restore</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin/users/shift/create/{id}</code></td><td>shift.create</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/attendance/admin/users/shift/store</code></td><td>shift.store</td><td><span class="auth-pill protected">protected</span></td><td class="params">userId, shiftId</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin/logs</code></td><td>attendance.logs</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin/logs/{id}</code></td><td>userlog</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/attendance/admin/export/{id}</code></td><td>attendancelogs.export</td><td><span class="auth-pill protected">protected</span></td><td class="params">?date=YYYY-MM (optional)</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/admin</code></td><td>spin.admin</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/admin/redeem/{id}</code></td><td>updateInvoiceForm</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
             </tbody>
           </table>
         </div>
@@ -545,15 +545,18 @@
           <table class="routes">
             <thead><tr><th>Method</th><th>Path</th><th>Name</th><th>Auth</th><th>Body / params</th></tr></thead>
             <tbody>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin</code></td><td>&mdash;</td><td><span class="auth-pill public">public</span></td><td class="params">redirects &rarr; showForm</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin-form</code></td><td>showForm</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/spin-form</code></td><td>saveInvoiceForm</td><td><span class="auth-pill public">public</span></td><td class="params">username, mobile, branch, invoice_number</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/{invoice_number}</code></td><td>showSpinWheel</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/{invoice_number}/{discount}</code></td><td>saveSpinWheel</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin-thankyou/{invoice_number}</code></td><td>thankYou</td><td><span class="auth-pill public">public</span></td><td class="params">prevent-back-button middleware</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin-invoice/import-invoice-form</code></td><td>importInvoice</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
-              <tr><td><span class="method post">POST</span></td><td><code class="path">/spin-invoice/save-invoice-excel</code></td><td>importInvoiceExcel</td><td><span class="auth-pill open">unprotected</span></td><td class="params">invoice (.xlsx / .xls / .csv)</td></tr>
-              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin-invoice/invoices</code></td><td>spinInvoices</td><td><span class="auth-pill open">unprotected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin-form</code></td><td>&mdash;</td><td><span class="auth-pill public">public</span></td><td class="params">301 &rarr; /spin</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin</code></td><td>showForm</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/spin</code></td><td>saveInvoiceForm</td><td><span class="auth-pill public">public</span></td><td class="params">username, mobile, branch, invoice_number</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/wheel/{invoice_number}</code></td><td>showSpinWheel</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/wheel/{invoice_number}/{discount}</code></td><td>saveSpinWheel</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/thankyou/{invoice_number}</code></td><td>thankYou</td><td><span class="auth-pill public">public</span></td><td class="params">prevent-back-button middleware</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/admin/invoices/import</code></td><td>importInvoice</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/spin/admin/invoices/import</code></td><td>importInvoiceExcel</td><td><span class="auth-pill protected">protected</span></td><td class="params">invoice (.xlsx / .xls / .csv)</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/admin/invoices</code></td><td>spinInvoices</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code class="path">/spin/admin/login</code></td><td>spin.login</td><td><span class="auth-pill public">public</span></td><td class="params">&mdash;</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/spin/admin/login</code></td><td>spin.login.validate</td><td><span class="auth-pill public">public</span></td><td class="params">username, password (same accounts as Chit Fund)</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code class="path">/spin/admin/logout</code></td><td>spin.logout</td><td><span class="auth-pill protected">protected</span></td><td class="params">&mdash;</td></tr>
             </tbody>
           </table>
         </div>
@@ -1027,7 +1030,7 @@ imageUrl=@selfie.jpg</code></pre>
         <div class="callout">
           <h3>&#9888; Three things worth fixing before this goes anywhere public</h3>
           <ol>
-            <li><strong>Every <code>/admin/users*</code> route is reachable with no login.</strong> The <code>admin</code> middleware group in <code>routes/web.php</code> wraps only the chit&#8209;fund routes (create plan, edit user, logout, &hellip;) &mdash; staff records, shift editing, and attendance export sit under the same <code>/admin</code> prefix but outside that group, so they run unauthenticated.</li>
+            <li><strong>All admin pages need a login.</strong> <code>/attendance/admin*</code>, <code>/chitfund/admin*</code> and <code>/spin/admin*</code> sit behind the shared <code>admin</code> guard, and each sends guests to its own <code>/&lt;module&gt;/admin/login</code> page. The same admin accounts work for all three.</li>
             <li><strong>The cache/optimize routes (<a href="#maintenance">Maintenance</a>) have no auth and no confirmation.</strong> A GET to <code>/clear</code> or <code>/route-cache</code> from anyone, including a search-engine crawler, runs the Artisan command immediately.</li>
             <li><strong><code>/clear-cache</code> is defined twice</strong> in <code>routes/web.php</code> &mdash; the second definition silently shadows the first.</li>
           </ol>

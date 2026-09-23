@@ -26,7 +26,7 @@ use App\Http\Controllers\AttendanceController;
 <div class="container d-flex text-right justify-content-end my-2">
     @if( !$attendancelogs->isEmpty() )
     <div class="col-lg-3">
-    <form action="{{ route('attendancelogs.export') }}" method="post">
+    <form action="{{ route('attendancelogs.export.post') }}" method="post">
         @csrf
         <div class="form-group">
             <div class='input-group text-right justify-content-end flex'>
@@ -81,8 +81,27 @@ use App\Http\Controllers\AttendanceController;
                     </a>
                 </td>    
                 <td>{{ Carbon::parse($attendancelog->shiftstartTime)->format('h:iA') }}-{{ Carbon::parse($attendancelog->shiftendTime)->format('h:iA') }}</td>            
-                <td>{{ $attendancelog->startTime ? $attendancelog->startTime : '-' }}</td>
-                <td>{{ $attendancelog->endTime ? $attendancelog->endTime : '-' }}</td>           
+                @php
+                    $loc = [
+                        'name'  => $attendancelog->firstName.' '.$attendancelog->lastName,
+                        'date'  => $attendancelog->startDate ? Carbon::parse($attendancelog->startDate)->format('d M Y') : '',
+                        'shift' => !empty($attendancelog->shiftstartTime) ? Carbon::parse($attendancelog->shiftstartTime)->format('h:iA').' - '.Carbon::parse($attendancelog->shiftendTime)->format('h:iA') : '',
+                        'photo' => $selfie['img_src'],
+                    ];
+                @endphp
+                <td>
+                    {{ $attendancelog->startTime ? $attendancelog->startTime : '-' }}
+                    @include('admin.partials.location-button', $loc + ['kind' => 'in', 'time' => $attendancelog->startTime,
+                        'lat' => $attendancelog->latitude ?? null, 'lng' => $attendancelog->longitude ?? null,
+                        'otherLat' => $attendancelog->out_latitude ?? null, 'otherLng' => $attendancelog->out_longitude ?? null])
+                </td>
+                <td>
+                    {{ $attendancelog->endTime ? $attendancelog->endTime : '-' }}
+                    @if( !empty($attendancelog->is_auto_punch_out) )<span class="badge bg-warning text-dark" title="No punch out before midnight - set to shift end automatically">Auto</span>@endif
+                    @include('admin.partials.location-button', $loc + ['kind' => 'out', 'time' => $attendancelog->endTime,
+                        'lat' => $attendancelog->out_latitude ?? null, 'lng' => $attendancelog->out_longitude ?? null,
+                        'otherLat' => $attendancelog->latitude ?? null, 'otherLng' => $attendancelog->longitude ?? null])
+                </td>
                 <td>
 					@if( $attendancelog->is_leave != 1 )
 						{{ $attendancelog->total_hours }}
@@ -129,9 +148,11 @@ use App\Http\Controllers\AttendanceController;
     @endif
 </table>
 
-<div class="pagination-nav flex items-center justify-between">        
-	{{ $attendancelogs->links() }} 
+<div class="pagination-nav flex items-center justify-between">
+	{{ $attendancelogs->links() }}
 </div>
+
+@include('admin.partials.location-modal')
 
 </div></div>
 @endsection

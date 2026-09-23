@@ -25,7 +25,7 @@
 		</div>	
 		<div class="row" style="padding-top: 10px;">
 			<div class="col-12 col-lg-12  text-center">
-				<h1 style="font-size: 40px;">Vasantham Siru Semippu Thittam</h1>
+				<h1 style="font-size: 40px;">{{ $heading }}</h1>
 			</div>
 		</div>		
 		<div class="row">
@@ -46,7 +46,7 @@
 					<p class="alert alert-info">{{ Session::get('error-message') }}</p>
 				@endif
 
-				<form action="{{ route('login.validate') }}" method="post">
+				<form action="{{ $action }}" method="post">
 					@csrf
 					<div class="mb-3">
 						<label for="username" class="form-label">UserName</label>
