@@ -53,6 +53,9 @@
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ route('salary.workingDaysYear') }}">  Working Days</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('report.index') }}">  Report</a>
+        </li>
       </ul>
       <form action="{{ route('attendance.logout') }}" method="POST" class="d-flex">
         @csrf

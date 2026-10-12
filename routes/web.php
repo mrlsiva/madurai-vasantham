@@ -10,6 +10,7 @@ use App\Http\Controllers\ChitFund\ChitFundController;
 use App\Http\Controllers\ChitFund\ChitFundUserImportController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,10 @@ Route::prefix('attendance')->group(function () {
         Route::get('/salary/{id}', [SalaryController::class, 'show'])->whereNumber('id')->name('salary.show');
         Route::post('/salary/{id}', [SalaryController::class, 'saveSalary'])->whereNumber('id')->name('salary.save');
         Route::post('/salary/{id}/delete/{salaryId}', [SalaryController::class, 'deleteSalary'])->whereNumber('id')->name('salary.delete');
+
+        /* Attendance reports: daily / weekly / monthly / custom, as page, Excel or PDF */
+        Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+        Route::get('/report/download/{format}', [ReportController::class, 'download'])->whereIn('format', ['excel', 'pdf'])->name('report.download');
         Route::post('/salary/{id}/working-days', [SalaryController::class, 'saveStaffWorkingDays'])->whereNumber('id')->name('salary.staffWorkingDays');
 
         Route::post('/logout', [AdminController::class, 'logout'])->defaults('module', 'attendance')->name('attendance.logout');
